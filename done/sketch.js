@@ -1,18 +1,20 @@
-
 let words = [];
 let sentence = "";
 let resultP;
 let leftDiv;
 let counter;
-let cnv, myRec, btn, txt, img;
+let cnv, myRec, btn, txt;
+let img, imageHolder;
+let myVoice;
 
 function setup() {
+    img = loadImage('img/cacao.jpg'); // Load the image
+
     let SpeechRecognition = window.webkitSpeechRecognition ||
         window.mozSpeechRecognition ||
         window.msSpeechRecognition ||
         window.oSpeechRecognition ||
         window.SpeechRecognition;
-
 
     cnv = createCanvas(400, 600);
     background('red');
@@ -26,6 +28,8 @@ function setup() {
         .parent(txt);
     //Check browser comp
     if (SpeechRecognition !== undefined) {
+        myVoice = new p5.Speech();
+        myVoice.setLang('da-DK');
         btn = createButton("Klik for at aktivere mikrofon")
             .position(40, 200)
             .style("font-size:1em;background-color:#33C3F0;border-color:#33C3F0;border-radius:8px;color:white;cursor:pointer;")
@@ -41,21 +45,12 @@ function setup() {
     }
 }
 
-function draw() {}
+function draw() {
+}
 
 function showResult() {
     if (myRec.resultValue == true) {
-        sentence = myRec.resultString;
+        var sentence = myRec.resultString.split(' ').pop();
         resultP.html(sentence);
-        if(sentence.includes("orange")){
-            img = createImg('assets/orange.png')
-                .position(width/2, height/2)
-                .style("width:50px;height:50px");
-        }
-    }
-    if(sentence.includes("lemon")){
-        img = createImg('assets/lemon.png')
-            .position(width/2, height/2)
-            .style("width:50px;height:50px");
     }
 }
