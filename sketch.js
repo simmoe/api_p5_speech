@@ -48,14 +48,20 @@ function showResult() {
         sentence = myRec.resultString;
         resultP.html(sentence);
         if(sentence.includes("orange")){
-            img = createImg('assets/orange.png')
-                .position(width/2, height/2)
-                .style("width:50px;height:50px");
+            switchImage('assets/orange.png');
         }
+        if(sentence.includes("lemon")){
+            switchImage('assets/lemon.png');
+        }    
     }
-    if(sentence.includes("lemon")){
-        img = createImg('assets/lemon.png')
-            .position(width/2, height/2)
-            .style("width:50px;height:50px");
+}
+
+function switchImage(url){
+    if(img == undefined){
+        img = createImg(url)
+        .position(width/2, height/2)
+        .style("width:50px;height:50px");
+    }else{
+        img.attribute('src', url)
     }
 }
