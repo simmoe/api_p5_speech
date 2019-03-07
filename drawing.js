@@ -1,3 +1,6 @@
+//Make a small drawing program with p5 speech 
+//reference: http://ability.nyu.edu/p5.js-speech/
+
 let myRec, browserCompatible, pen, direction, displayWord;
 
 
