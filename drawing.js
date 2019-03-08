@@ -1,5 +1,6 @@
 //Make a small drawing program with p5 speech 
 //reference: http://ability.nyu.edu/p5.js-speech/
+//Cloned from github.com/simmoe/p5_api_speech
 
 let myRec, browserCompatible, pen, direction, displayWord;
 
@@ -20,17 +21,66 @@ function setup() {
         myRec.interimResults = true;
         myRec.onResult = showResult;
         myRec.start();
-    }    
+    }
     displayWord = createDiv();
+
+    pen = {
+        x: width / 2,
+        y: height / 2,
+        size: 6,
+        col: color(255, 255, 255, 150),
+        show: function () {
+            fill(this.col)
+            ellipseMode(CENTER)
+            ellipse(this.x, this.y, this.size, this.size)
+        },
+        bounce: function () {
+            this.x = this.x < 0 ? 0 : this.x;
+            this.x = this.x > width ? width : this.x;
+            this.y = this.y < 0 ? 0 : this.y;
+            this.y = this.y > height ? height : this.y;
+        }
+    }
+    console.log("Pen findes, og dens x værdi er: " + pen.x);
 }
 
 function draw() {
+    if (direction == "up") pen.y--;
+    if (direction == "down") pen.y++;
+    if (direction == "left") pen.x--;
+    if (direction == "right") pen.x++;
+
+    pen.bounce();
+    pen.show();
 }
 
 function showResult() {
     if (myRec.resultValue == true) {
         word = myRec.resultString.split(' ').pop();
         displayWord.html(word.toLowerCase());
+        switch (word.toLowerCase()) {
+            case 'left':
+            case 'netflix':
+            case 'theft':
+                direction = "left"
+                break;
+            case 'up':
+            case 'op':
+                direction = "up"
+                break;
+            case 'down':
+                direction = "down"
+                break;
+            case 'right':
+            case 'rights':
+                direction = "right"
+                break;
+            case 'bacon':
+                pen.size += 10;
+            default:
+                break;
+                direction = "stop"
+        }
     }
 }
 
